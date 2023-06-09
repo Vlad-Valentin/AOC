@@ -9,6 +9,8 @@
 
         private List<int> CurrentNodes { get; set; }
 
+        private int MaxFlux { get; set; }
+
         public FordFulkerson(Graph graph)
         {
             this.Graph = graph;
@@ -16,6 +18,8 @@
             Predecessors = new(Enumerable.Repeat(0, graph.Nodes.Count));
 
             CurrentNodes = new();
+
+            MaxFlux = 0;
         }
         #endregion
 
@@ -135,6 +139,7 @@
                     if (dmf == null)
                     {
                         Write();
+                        Console.WriteLine($"\nMax Flux: {MaxFlux}");
                         return;
                     }
 
@@ -144,10 +149,13 @@
                     int min = GetMinCapacity(dmf);
                     Console.Write($"Min Capacity: {min}");
 
+                    MaxFlux += min;
+
                     AugmentPath(dmf, min);
                 }
 
                 Write();
+                Console.WriteLine($"\nMax Flux: {MaxFlux}");
             }
             while (Predecessors.Last() != 0);
         }
