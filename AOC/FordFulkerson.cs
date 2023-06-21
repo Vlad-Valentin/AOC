@@ -3,13 +3,13 @@
     public class FordFulkerson
     {
         #region Properties & Constructors
-        private Graph Graph { get; set; }
+        public Graph Graph { get; set; }
 
         private List<int> Predecessors { get; set; }
 
         private List<int> CurrentNodes { get; set; }
 
-        private int MaxFlux { get; set; }
+        private int MaxFlow { get; set; }
 
         public FordFulkerson(Graph graph)
         {
@@ -19,7 +19,7 @@
 
             CurrentNodes = new();
 
-            MaxFlux = 0;
+            MaxFlow = 0;
         }
         #endregion
 
@@ -139,7 +139,7 @@
                     if (dmf == null)
                     {
                         Write();
-                        Console.WriteLine($"\nMax Flux: {MaxFlux}");
+                        Console.WriteLine($"\nMax Flow: {MaxFlow}");
                         return;
                     }
 
@@ -149,13 +149,13 @@
                     int min = GetMinCapacity(dmf);
                     Console.Write($"Min Capacity: {min}");
 
-                    MaxFlux += min;
+                    MaxFlow += min;
 
                     AugmentPath(dmf, min);
                 }
 
                 Write();
-                Console.WriteLine($"\nMax Flux: {MaxFlux}");
+                Console.WriteLine($"\nMax Flow: {MaxFlow}");
             }
             while (Predecessors.Last() != 0);
         }
