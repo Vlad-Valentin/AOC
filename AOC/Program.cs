@@ -55,78 +55,85 @@ public class Program
         //GenericPreflow genericPreflow = new(graph);
         //genericPreflow.Apply();
 
-        List<int> teams = new() { 1, 2, 3 }; // Echipele disponibile
-        List<int> projects = new() { 1, 2, 3, 4 }; // Proiectele disponibile
-
-        // Dicționar pentru a reține timpul necesar pentru fiecare proiect
-        Dictionary<int, int> projectTimes = new()
-{
-    { 1, 3 },
-    { 2, 5 },
-    { 3, 2 },
-    { 4, 4 }
-};
-
-        // Dicționar pentru a reține mulțimea de proiecte la care poate contribui fiecare echipă
-        Dictionary<int, List<int>> teamProjects = new()
-{
-    { 1, new List<int> { 1, 2 } },
-    { 2, new List<int> { 2, 3 } },
-    { 3, new List<int> { 3, 4 } }
-};
-
-        // Dicționar pentru a reține timpul de lucru maxim alocat fiecărei echipe
-        Dictionary<int, int> teamWorkTimes = new()
-{
-    { 1, 5 },
-    { 2, 4 },
-    { 3, 3 }
-};
-
-        Graph graph = new Graph();
-
-        // Adăugăm nodurile reprezentând echipele și proiectele în graf
-        foreach (int team in teams)
+        #region PROBLEM 1
+        // 1 = S
+        //{2, 3, 4 } = E
+        //{5, 6, 7, 8, 9, 10, 11 } = P
+        // 12 = T
+        List<int> nodes1 = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+        Dictionary<Tuple<int, int>, int> arcs1 = new()
         {
-            graph.AddNode(team);
-        }
+        {Tuple.Create(1, 2), 8},
+        {Tuple.Create(1, 3), 8},
+        {Tuple.Create(1, 4), 8},
+        {Tuple.Create(2, 7), 5},
+        {Tuple.Create(2, 8), 2},
+        {Tuple.Create(2, 9), 1},
+        {Tuple.Create(2, 10), 3},
+        {Tuple.Create(3, 5), 2},
+        {Tuple.Create(3, 6), 2},
+        {Tuple.Create(3, 7), 5},
+        {Tuple.Create(3, 9), 1},
+        {Tuple.Create(3, 10), 3},
+        {Tuple.Create(3, 11), 9},
+        {Tuple.Create(4, 6), 2},
+        {Tuple.Create(4, 7), 5},
+        {Tuple.Create(4, 9), 5},
+        {Tuple.Create(4, 11), 9},
+        {Tuple.Create(5, 12), 2},
+        {Tuple.Create(6, 12), 2},
+        {Tuple.Create(7, 12), 5},
+        {Tuple.Create(8, 12), 2},
+        {Tuple.Create(9, 12), 1},
+        {Tuple.Create(10, 12), 3},
+        {Tuple.Create(11, 12), 9}
+        };
 
-        foreach (int project in projects)
-        {
-            graph.AddNode(project);
-        }
+        Graph graph1 = new(nodes1, arcs1);
 
-        // Adăugăm arcele între echipe și proiecte, cu capacitățile corespunzătoare
-        foreach (var entry in teamProjects)
-        {
-            int team = entry.Key;
-            List<int> teamProjectList = entry.Value;
+        Console.WriteLine("\n== 1. FF ==");
+        FordFulkerson fordFulkerson1 = new(graph1);
+        fordFulkerson1.Apply();
 
-            foreach (int project in teamProjectList)
-            {
-                int capacity = projectTimes[project];
-                graph.AddArc(team, project, capacity);
-            }
-        }
+        Console.WriteLine("\n== 1. GP ==");
+        GenericPreflow genericPreflow1 = new(graph1);
+        genericPreflow1.Apply();
 
-        // Adăugăm arcele între proiecte și sursă, cu capacitățile corespunzătoare
-        foreach (int project in projects)
-        {
-            int capacity = projectTimes[project];
-            graph.AddArc(project, graph.Nodes.First(), capacity);
-        }
+        //graph1.WriteTeamTimes(3);
+        //graph1.WriteProjectTimes(11);
+        #endregion
 
-        // Adăugăm arcele între echipe și destinație, cu timpii de lucru aferenți fiecărei echipe
-        foreach (var entry in teamWorkTimes)
-        {
-            int team = entry.Key;
-            int workTime = entry.Value;
-            graph.AddArc(team, graph.Nodes.Last(), workTime);
-        }
+        //#region PROBLEM 2
+        //// 1 = S
+        ////{2, 3, 4, 5, 6} = A
+        //// 7 = T
+        //List<int> nodes2 = new() { 1, 2, 3, 4, 5, 6, 7 };
+        //Dictionary<Tuple<int, int>, int> arcs2 = new()
+        //{
+        //{Tuple.Create(1, 2), 4},
+        //{Tuple.Create(1, 3), 2},
+        //{Tuple.Create(2, 3), 2},
+        //{Tuple.Create(2, 4), 2},
+        //{Tuple.Create(2, 5), 3},
+        //{Tuple.Create(3, 6), 5},
+        //{Tuple.Create(4, 6), 2},
+        //{Tuple.Create(5, 7), 3},
+        //{Tuple.Create(6, 5), 1},
+        //{Tuple.Create(6, 7), 3}
+        //};
 
-        //graph.Write();
+        //Graph graph2 = new(nodes2, arcs2);
 
-        GenericPreflow genericPreflow = new(graph);
-        genericPreflow.Apply();
+        //Console.WriteLine("\n== 2. FF ==");
+        //FordFulkerson fordFulkerson2 = new(graph2);
+        //fordFulkerson2.Apply();
+
+        //Console.WriteLine("\n== 2. GP ==");
+        //GenericPreflow genericPreflow2 = new(graph2);
+        //genericPreflow2.Apply();
+
+        //graph2.WriteSupplySent(2);
+        //graph2.WriteDemandRecevied(6);
+        //#endregion
     }
 }

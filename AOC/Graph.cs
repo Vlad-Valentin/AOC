@@ -30,6 +30,42 @@
             Arcs.Keys.ToList().ForEach(a => { Console.Write($"\n{a} - {Arcs[a]} "); });
         }
 
+        public void WriteProjectTimes(int p)
+        {
+            Console.WriteLine($"\nProject {p - 4} ({p}): ");
+            for (int e = 2; e <= 4; e++)
+            {
+                Console.Write($"{GetCapacity(e, p)} ");
+            }
+        }
+
+        public void WriteTeamTimes(int t)
+        {
+            Console.WriteLine($"\nTeam {t - 1} ({t}): ");
+            for (int p = 5; p <= 11; p++)
+            {
+                Console.Write($"{GetCapacity(t, p)} ");
+            }
+        }
+
+        public void WriteSupplySent(int s)
+        {
+            Console.WriteLine($"\nSupply {s - 1} ({s}): ");
+            for (int d = 5; d <= 6; d++)
+            {
+                Console.Write($"{GetCapacity(s, d)} ");
+            }
+        }
+
+        public void WriteDemandRecevied(int d)
+        {
+            Console.WriteLine($"\nDemand {d - 4} ({d}): ");
+            for (int s = 1; s <= 2; s++)
+            {
+                Console.Write($"{GetCapacity(s, d)} ");
+            }
+        }
+
         public void AddNode(int node)
         {
             if (Nodes.Contains(node)) { return; }

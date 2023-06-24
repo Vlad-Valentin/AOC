@@ -162,8 +162,6 @@
                 //Graph.Arcs.ToList().ForEach(p => { Console.Write($"{p.Key} - {p.Value} "); });
                 Graph.Write();
             }
-
-
             #endregion
         }
     }
