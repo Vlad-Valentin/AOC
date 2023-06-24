@@ -33,9 +33,9 @@
         public void WriteProjectTimes(int p)
         {
             Console.WriteLine($"\nProject {p - 4} ({p}): ");
-            for (int e = 2; e <= 4; e++)
+            for (int t = 2; t <= 4; t++)
             {
-                Console.Write($"{GetCapacity(e, p)} ");
+                Console.Write($"{GetCapacity(p, t)} ");
             }
         }
 
@@ -44,25 +44,40 @@
             Console.WriteLine($"\nTeam {t - 1} ({t}): ");
             for (int p = 5; p <= 11; p++)
             {
-                Console.Write($"{GetCapacity(t, p)} ");
+                Console.Write($"{GetCapacity(p, t)} ");
             }
         }
 
-        public void WriteSupplySent(int s)
+        public void WriteSupplySent(int s, int t)
         {
             Console.WriteLine($"\nSupply {s - 1} ({s}): ");
             for (int d = 5; d <= 6; d++)
             {
-                Console.Write($"{GetCapacity(s, d)} ");
+                if (GetCapacity(d, s) != 0)
+                {
+                    Console.Write($"{GetCapacity(d, s)} ");
+                }
+                else
+                {
+                    Console.Write($"{GetCapacity(d, t)} ");
+                }
+                
             }
         }
 
-        public void WriteDemandRecevied(int d)
+        public void WriteDemandRecevied(int d, int t)
         {
             Console.WriteLine($"\nDemand {d - 4} ({d}): ");
-            for (int s = 1; s <= 2; s++)
+            for (int s = 2; s <= 3; s++)
             {
-                Console.Write($"{GetCapacity(s, d)} ");
+                if (GetCapacity(d, s) != 0)
+                {
+                    Console.Write($"{GetCapacity(d, s)} ");
+                }
+                else
+                {
+                    Console.Write($"{GetCapacity(d, t)} ");
+                }
             }
         }
 

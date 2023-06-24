@@ -63,30 +63,30 @@ public class Program
         List<int> nodes1 = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
         Dictionary<Tuple<int, int>, int> arcs1 = new()
         {
-        {Tuple.Create(1, 2), 8},
-        {Tuple.Create(1, 3), 8},
-        {Tuple.Create(1, 4), 8},
-        {Tuple.Create(2, 7), 5},
-        {Tuple.Create(2, 8), 2},
-        {Tuple.Create(2, 9), 1},
-        {Tuple.Create(2, 10), 3},
-        {Tuple.Create(3, 5), 2},
-        {Tuple.Create(3, 6), 2},
-        {Tuple.Create(3, 7), 5},
-        {Tuple.Create(3, 9), 1},
-        {Tuple.Create(3, 10), 3},
-        {Tuple.Create(3, 11), 9},
-        {Tuple.Create(4, 6), 2},
-        {Tuple.Create(4, 7), 5},
-        {Tuple.Create(4, 9), 5},
-        {Tuple.Create(4, 11), 9},
-        {Tuple.Create(5, 12), 2},
-        {Tuple.Create(6, 12), 2},
-        {Tuple.Create(7, 12), 5},
-        {Tuple.Create(8, 12), 2},
-        {Tuple.Create(9, 12), 1},
-        {Tuple.Create(10, 12), 3},
-        {Tuple.Create(11, 12), 9}
+        {Tuple.Create(1,2), 8},
+        {Tuple.Create(1,3), 8},
+        {Tuple.Create(1,4), 8},
+        {Tuple.Create(2,7), 5},
+        {Tuple.Create(2,8), 2},
+        {Tuple.Create(2,9), 1},
+        {Tuple.Create(2,10), 3},
+        {Tuple.Create(3,5), 2},
+        {Tuple.Create(3,6), 2},
+        {Tuple.Create(3,7), 5},
+        {Tuple.Create(3,9), 1},
+        {Tuple.Create(3,10), 3},
+        {Tuple.Create(3,11), 9},
+        {Tuple.Create(4,6), 2},
+        {Tuple.Create(4,7), 5},
+        {Tuple.Create(4,9), 5},
+        {Tuple.Create(4,11), 9},
+        {Tuple.Create(5,12), 2},
+        {Tuple.Create(6,12), 2},
+        {Tuple.Create(7,12), 5},
+        {Tuple.Create(8,12), 2},
+        {Tuple.Create(9,12), 1},
+        {Tuple.Create(10,12), 3},
+        {Tuple.Create(11,12), 9},
         };
 
         Graph graph1 = new(nodes1, arcs1);
@@ -99,41 +99,41 @@ public class Program
         GenericPreflow genericPreflow1 = new(graph1);
         genericPreflow1.Apply();
 
-        //graph1.WriteTeamTimes(3);
-        //graph1.WriteProjectTimes(11);
+        graph1.WriteTeamTimes(4);
+        graph1.WriteProjectTimes(11);
         #endregion
 
-        //#region PROBLEM 2
-        //// 1 = S
-        ////{2, 3, 4, 5, 6} = A
-        //// 7 = T
-        //List<int> nodes2 = new() { 1, 2, 3, 4, 5, 6, 7 };
-        //Dictionary<Tuple<int, int>, int> arcs2 = new()
-        //{
-        //{Tuple.Create(1, 2), 4},
-        //{Tuple.Create(1, 3), 2},
-        //{Tuple.Create(2, 3), 2},
-        //{Tuple.Create(2, 4), 2},
-        //{Tuple.Create(2, 5), 3},
-        //{Tuple.Create(3, 6), 5},
-        //{Tuple.Create(4, 6), 2},
-        //{Tuple.Create(5, 7), 3},
-        //{Tuple.Create(6, 5), 1},
-        //{Tuple.Create(6, 7), 3}
-        //};
+        #region PROBLEM 2
+        // 1 = S
+        //{2, 3, 4, 5, 6} = A
+        // 7 = T
+        List<int> nodes2 = new() { 1, 2, 3, 4, 5, 6, 7 };
+        Dictionary<Tuple<int, int>, int> arcs2 = new()
+        {
+        {Tuple.Create(1, 2), 4},
+        {Tuple.Create(1, 3), 2},
+        {Tuple.Create(2, 3), 2},
+        {Tuple.Create(2, 4), 2},
+        {Tuple.Create(2, 5), 3},
+        {Tuple.Create(3, 6), 5},
+        {Tuple.Create(4, 6), 2},
+        {Tuple.Create(5, 7), 3},
+        {Tuple.Create(6, 5), 1},
+        {Tuple.Create(6, 7), 3}
+        };
 
-        //Graph graph2 = new(nodes2, arcs2);
+        Graph graph2 = new(nodes2, arcs2);
 
-        //Console.WriteLine("\n== 2. FF ==");
-        //FordFulkerson fordFulkerson2 = new(graph2);
-        //fordFulkerson2.Apply();
+        Console.WriteLine("\n== 2. FF ==");
+        FordFulkerson fordFulkerson2 = new(graph2);
+        fordFulkerson2.Apply();
 
-        //Console.WriteLine("\n== 2. GP ==");
-        //GenericPreflow genericPreflow2 = new(graph2);
-        //genericPreflow2.Apply();
+        Console.WriteLine("\n== 2. GP ==");
+        GenericPreflow genericPreflow2 = new(graph2);
+        genericPreflow2.Apply();
 
-        //graph2.WriteSupplySent(2);
-        //graph2.WriteDemandRecevied(6);
-        //#endregion
+        graph2.WriteSupplySent(3, 4);
+        graph2.WriteDemandRecevied(5, 4);
+        #endregion
     }
 }
