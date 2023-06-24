@@ -8,6 +8,7 @@
         {
             #region Properties
             public Graph Graph { get; set; }
+
             private Dictionary<int, int> Distances { get; set; }
 
             private Dictionary<int, int> ExcessFlows { get; set; }
@@ -22,17 +23,22 @@
             {
                 Graph = graph;
                 Distances = new();
-                ExcessFlows = new Dictionary<int, int>();
 
                 Source = graph.Nodes.ToList().First();
                 Sink = graph.Nodes.ToList().Last();
+
+                ExcessFlows = new Dictionary<int, int>();
+                foreach (var node in Graph.Nodes)
+                {
+                    ExcessFlows[node] = 0;
+                }
             }
             #endregion
 
             #region Functions
             public void Apply()
             {
-                ExcessFlows = CalculateExcessFlows();
+                InitExcessFlows();
 
                 Distances = CalculateDistances();
 
@@ -40,13 +46,16 @@
                 {
                     int activeNode = SelectActiveNode();
 
-                    var arc = Graph.Arcs.FirstOrDefault(a => a.Key.Item1 == activeNode && a.Value > 0);
-                    if (arc.Key != null)
+                    var arc = SelectValidArc(activeNode);
+                    if (arc.Key != Tuple.Create(-1, -1) && arc.Value != 0)
                     {
                         int minUnit = Math.Min(ExcessFlows[activeNode], arc.Value);
 
                         Graph.UpdateArc(activeNode, arc.Key.Item2, -minUnit);
                         Graph.UpdateArc(arc.Key.Item2, activeNode, minUnit);
+
+                        ExcessFlows[activeNode] -= minUnit;
+                        ExcessFlows[arc.Key.Item2] += minUnit;
                     }
                     else
                     {
@@ -68,6 +77,26 @@
                 }
 
                 Write();
+            }
+
+            private void InitExcessFlows()
+            {
+                Dictionary<int, int> arcs = new();
+                ExcessFlows[Source] = 0;
+
+                foreach (var arc in Graph.Arcs.Where(a => a.Key.Item1 == Source))
+                {
+                    ExcessFlows[arc.Key.Item2] = arc.Value;
+                    ExcessFlows[Source] -= arc.Value;
+
+                    arcs[arc.Key.Item2] = arc.Value;
+                }
+
+                foreach (var a in arcs)
+                {
+                    Graph.UpdateArc(Source, a.Key, -a.Value);
+                    Graph.UpdateArc(a.Key, Source, a.Value);
+                }
             }
 
             private Dictionary<int, int> CalculateDistances()
@@ -100,66 +129,42 @@
                     }
                 }
 
-                distances[1] = Graph.Nodes.Count;
+                distances[Source] = Graph.Nodes.Count;
 
                 return distances;
             }
 
             private int SelectActiveNode()
             {
-                foreach (var arc in Graph.Arcs)
+                foreach (var node in Graph.Nodes)
                 {
-                    int fromNode = arc.Key.Item1;
-                    int toNode = arc.Key.Item2;
-                    int residualCapacity = arc.Value;
-
-                    if (residualCapacity > 0 && Distances[fromNode] > Distances[toNode] && ExcessFlows[fromNode] > 0)
+                    if (Distances[node] > 0 && ExcessFlows[node] > 0)
                     {
-                        return fromNode;
+                        return node;
                     }
                 }
 
                 return -1;
             }
 
-            private Dictionary<int, int> CalculateExcessFlows()
+            private KeyValuePair<Tuple<int, int>, int> SelectValidArc(int x)
             {
-                Dictionary<int, int> excessFlows = new();
-
-                foreach (int node in Graph.Nodes)
+                foreach (var arc in Graph.Arcs.Where(a => a.Key.Item1 == x))
                 {
-                    if (node != Source && node != Sink)
+                    if (Distances[arc.Key.Item1] == Distances[arc.Key.Item2] + 1 && arc.Value > 0)
                     {
-                        int inflow = 0;
-                        int outflow = 0;
-
-                        foreach (var arc in Graph.Arcs)
-                        {
-                            int fromNode = arc.Key.Item1;
-                            int toNode = arc.Key.Item2;
-                            int capacity = arc.Value;
-
-                            if (fromNode == node)
-                                outflow += capacity;
-
-                            if (toNode == node)
-                                inflow += capacity;
-                        }
-
-                        excessFlows[node] = inflow - outflow;
+                        return arc;
                     }
                 }
 
-                excessFlows[Source] = 0;
-                excessFlows[Sink] = 0;
-
-                return excessFlows;
+                return new KeyValuePair<Tuple<int, int>, int>(Tuple.Create(-1, -1), 0);
             }
 
             public void Write()
             {
-                //Console.Write("\nArcs - r: ");
-                //Graph.Arcs.ToList().ForEach(p => { Console.Write($"{p.Key} - {p.Value} "); });
+                Console.Write("\n\nE: ");
+                ExcessFlows.ToList().ForEach(e => { Console.Write($"\ne({e.Key}) = {e.Value}"); });
+
                 Graph.Write();
             }
             #endregion

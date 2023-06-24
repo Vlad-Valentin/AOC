@@ -23,34 +23,34 @@
         #region Functions
         public void Write()
         {
-            Console.Write("\nN: ");
+            Console.Write("\n\nN: ");
             Nodes.ForEach(n => { Console.Write($"{n} "); });
 
-            Console.Write("\nA: ");
-            Arcs.Keys.ToList().ForEach(a => { Console.Write($"\n{a} - {Arcs[a]} "); });
+            Console.Write("\n\nA: ");
+            Arcs.Keys.ToList().ForEach(a => { Console.Write($"\nr{a} = {Arcs[a]} "); });
         }
 
-        public void WriteProjectTimes(int p)
+        public void WriteProjectTimes(int p, int tStart, int tEnd)
         {
-            Console.WriteLine($"\nProject {p - 4} ({p}): ");
-            for (int t = 2; t <= 4; t++)
+            Console.Write($"\n\nProject {p - tEnd} ({p}): ");
+            for (int t = tStart; t <= tEnd; t++)
             {
                 Console.Write($"{GetCapacity(p, t)} ");
             }
         }
 
-        public void WriteTeamTimes(int t)
+        public void WriteTeamTimes(int t, int pStart, int pEnd)
         {
-            Console.WriteLine($"\nTeam {t - 1} ({t}): ");
-            for (int p = 5; p <= 11; p++)
+            Console.Write($"\n\nTeam {t - 1} ({t}): ");
+            for (int p = pStart; p <= pEnd; p++)
             {
                 Console.Write($"{GetCapacity(p, t)} ");
             }
         }
 
-        public void WriteSupplySent(int s, int t)
+        public void WriteSupplierSent(int s, int t)
         {
-            Console.WriteLine($"\nSupply {s - 1} ({s}): ");
+            Console.Write($"\n\nWarehouse {s - 1} ({s}): ");
             for (int d = 5; d <= 6; d++)
             {
                 if (GetCapacity(d, s) != 0)
@@ -61,22 +61,22 @@
                 {
                     Console.Write($"{GetCapacity(d, t)} ");
                 }
-                
+
             }
         }
 
-        public void WriteDemandRecevied(int d, int t)
+        public void WriteWarehouseReceived(int w, int t)
         {
-            Console.WriteLine($"\nDemand {d - 4} ({d}): ");
+            Console.Write($"\n\nDeposit {w - 4} ({w}): ");
             for (int s = 2; s <= 3; s++)
             {
-                if (GetCapacity(d, s) != 0)
+                if (GetCapacity(w, s) != 0)
                 {
-                    Console.Write($"{GetCapacity(d, s)} ");
+                    Console.Write($"{GetCapacity(w, s)} ");
                 }
                 else
                 {
-                    Console.Write($"{GetCapacity(d, t)} ");
+                    Console.Write($"{GetCapacity(w, t)} ");
                 }
             }
         }

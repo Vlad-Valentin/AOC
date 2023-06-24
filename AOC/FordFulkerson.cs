@@ -26,13 +26,9 @@
         #region Functions
         public void Write()
         {
-            Console.Write("\nP: ");
+            Console.Write("\n\nP: ");
             Predecessors.ForEach(p => { Console.Write($"{p} "); });
 
-            Console.Write("\nV: ");
-            CurrentNodes.ForEach(c => { Console.Write($"{c} "); });
-
-            Console.Write("\nA: ");
             Graph.Write();
         }
 
@@ -100,8 +96,6 @@
                 int from = path[i + 1];
                 int capacity = Graph.GetCapacity(to, from);
 
-                Console.WriteLine($"\n{to}, {from}");
-
                 minCapacity = Math.Min(minCapacity, capacity);
             }
 
@@ -119,6 +113,9 @@
 
                 while (CurrentNodes.Count > 0 && Predecessors.Last() == 0)
                 {
+                    Console.Write("\n\nV: ");
+                    CurrentNodes.ForEach(c => { Console.Write($"{c} "); });
+
                     int node = CurrentNodes.First();
                     CurrentNodes.Remove(node);
 
@@ -139,15 +136,15 @@
                     if (dmf == null)
                     {
                         Write();
-                        Console.WriteLine($"\nMax Flow: {MaxFlow}");
+                        Console.WriteLine($"\n\nMax Flow: {MaxFlow}");
                         return;
                     }
 
-                    Console.WriteLine("\nDMF: ");
+                    Console.Write("\n\nDMF: ");
                     dmf.ForEach(d => { Console.Write($"{d} "); });
 
                     int min = GetMinCapacity(dmf);
-                    Console.Write($"Min Capacity: {min}");
+                    Console.Write($"\n\nMin Capacity: {min}");
 
                     MaxFlow += min;
 
@@ -155,7 +152,7 @@
                 }
 
                 Write();
-                Console.WriteLine($"\nMax Flow: {MaxFlow}");
+                Console.WriteLine($"\n\nMax Flow: {MaxFlow}");
             }
             while (Predecessors.Last() != 0);
         }

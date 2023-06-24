@@ -63,44 +63,75 @@ public class Program
         List<int> nodes1 = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
         Dictionary<Tuple<int, int>, int> arcs1 = new()
         {
-        {Tuple.Create(1,2), 8},
-        {Tuple.Create(1,3), 8},
-        {Tuple.Create(1,4), 8},
-        {Tuple.Create(2,7), 5},
-        {Tuple.Create(2,8), 2},
-        {Tuple.Create(2,9), 1},
-        {Tuple.Create(2,10), 3},
-        {Tuple.Create(3,5), 2},
-        {Tuple.Create(3,6), 2},
-        {Tuple.Create(3,7), 5},
-        {Tuple.Create(3,9), 1},
-        {Tuple.Create(3,10), 3},
-        {Tuple.Create(3,11), 9},
-        {Tuple.Create(4,6), 2},
-        {Tuple.Create(4,7), 5},
-        {Tuple.Create(4,9), 5},
-        {Tuple.Create(4,11), 9},
-        {Tuple.Create(5,12), 2},
-        {Tuple.Create(6,12), 2},
-        {Tuple.Create(7,12), 5},
-        {Tuple.Create(8,12), 2},
-        {Tuple.Create(9,12), 1},
-        {Tuple.Create(10,12), 3},
-        {Tuple.Create(11,12), 9},
+        {Tuple.Create(1, 2), 8},
+        {Tuple.Create(1, 3), 8},
+        {Tuple.Create(1, 4), 8},
+        {Tuple.Create(2, 7), 5},
+        {Tuple.Create(2, 8), 2},
+        {Tuple.Create(2, 9), 1},
+        {Tuple.Create(2, 10), 3},
+        {Tuple.Create(3, 5), 2},
+        {Tuple.Create(3, 6), 2},
+        {Tuple.Create(3, 7), 5},
+        {Tuple.Create(3, 9), 1},
+        {Tuple.Create(3, 10), 3},
+        {Tuple.Create(3, 11), 9},
+        {Tuple.Create(4, 6), 2},
+        {Tuple.Create(4, 7), 5},
+        {Tuple.Create(4, 9), 5},
+        {Tuple.Create(4, 11), 9},
+        {Tuple.Create(5, 12), 2},
+        {Tuple.Create(6, 12), 2},
+        {Tuple.Create(7, 12), 5},
+        {Tuple.Create(8, 12), 2},
+        {Tuple.Create(9, 12), 1},
+        {Tuple.Create(10, 12), 3},
+        {Tuple.Create(11, 12), 9},
         };
 
         Graph graph1 = new(nodes1, arcs1);
 
-        Console.WriteLine("\n== 1. FF ==");
+        Console.WriteLine("\t\t\t\t\t== ASSIGNMENT 1 ==\n\n");
+
+        Console.WriteLine("\n\t== 1. Ford-Fulkerson ==");
         FordFulkerson fordFulkerson1 = new(graph1);
         fordFulkerson1.Apply();
 
-        Console.WriteLine("\n== 1. GP ==");
+        arcs1 = new()
+        {
+        {Tuple.Create(1, 2), 8},
+        {Tuple.Create(1, 3), 8},
+        {Tuple.Create(1, 4), 8},
+        {Tuple.Create(2, 7), 5},
+        {Tuple.Create(2, 8), 2},
+        {Tuple.Create(2, 9), 1},
+        {Tuple.Create(2, 10), 3},
+        {Tuple.Create(3, 5), 2},
+        {Tuple.Create(3, 6), 2},
+        {Tuple.Create(3, 7), 5},
+        {Tuple.Create(3, 9), 1},
+        {Tuple.Create(3, 10), 3},
+        {Tuple.Create(3, 11), 9},
+        {Tuple.Create(4, 6), 2},
+        {Tuple.Create(4, 7), 5},
+        {Tuple.Create(4, 9), 5},
+        {Tuple.Create(4, 11), 9},
+        {Tuple.Create(5, 12), 2},
+        {Tuple.Create(6, 12), 2},
+        {Tuple.Create(7, 12), 5},
+        {Tuple.Create(8, 12), 2},
+        {Tuple.Create(9, 12), 1},
+        {Tuple.Create(10, 12), 3},
+        {Tuple.Create(11, 12), 9},
+        };
+        graph1 = new(nodes1, arcs1);
+
+        Console.WriteLine("\n\t== 1. Generic Preflow ==");
         GenericPreflow genericPreflow1 = new(graph1);
         genericPreflow1.Apply();
 
-        graph1.WriteTeamTimes(4);
-        graph1.WriteProjectTimes(11);
+        graph1.WriteTeamTimes(2, 5, 11);
+        graph1.WriteProjectTimes(11, 2, 4);
         #endregion
 
         #region PROBLEM 2
@@ -124,16 +155,33 @@ public class Program
 
         Graph graph2 = new(nodes2, arcs2);
 
-        Console.WriteLine("\n== 2. FF ==");
+        Console.WriteLine("\n\n\t\t\t\t\t== ASSIGNMENT 2 ==\n\n");
+
+        Console.WriteLine("\n\t== 2. Ford-Fulkerson ==");
         FordFulkerson fordFulkerson2 = new(graph2);
         fordFulkerson2.Apply();
 
-        Console.WriteLine("\n== 2. GP ==");
+        arcs2 = new()
+        {
+        {Tuple.Create(1, 2), 4},
+        {Tuple.Create(1, 3), 2},
+        {Tuple.Create(2, 3), 2},
+        {Tuple.Create(2, 4), 2},
+        {Tuple.Create(2, 5), 3},
+        {Tuple.Create(3, 6), 5},
+        {Tuple.Create(4, 6), 2},
+        {Tuple.Create(5, 7), 3},
+        {Tuple.Create(6, 5), 1},
+        {Tuple.Create(6, 7), 3}
+        };
+        graph2 = new(nodes2, arcs2);
+
+        Console.WriteLine("\n\t== 2. Generic Preflow ==");
         GenericPreflow genericPreflow2 = new(graph2);
         genericPreflow2.Apply();
 
-        graph2.WriteSupplySent(3, 4);
-        graph2.WriteDemandRecevied(5, 4);
+        graph2.WriteSupplierSent(3, 4);
+        graph2.WriteWarehouseReceived(5, 4);
         #endregion
     }
 }
