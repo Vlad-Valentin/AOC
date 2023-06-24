@@ -5,57 +5,7 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        //List<int> nodes = new() { 1, 2, 3, 4 };
-        ////Dictionary<Tuple<int, int>, int> arcs = new() {
-        ////    { Tuple.Create(1, 2), 10 },
-        ////    { Tuple.Create(1, 3), 12 },
-        ////    { Tuple.Create(2, 3), 10 },
-        ////    { Tuple.Create(2, 4), 3 },
-        ////    { Tuple.Create(2, 5), 7 },
-        ////    { Tuple.Create(3, 5), 5 },
-        ////    { Tuple.Create(4, 6), 5 },
-        ////    { Tuple.Create(5, 6), 15 }
-        ////};
-
-        ////FF
-        ////Dictionary<Tuple<int, int>, int> arcs = new() {
-        ////    { Tuple.Create(1, 2), 8 },
-        ////    { Tuple.Create(1, 3), 6 },
-        ////    { Tuple.Create(2, 3), 2 },
-        ////    { Tuple.Create(2, 4), 5 },
-        ////    { Tuple.Create(2, 5), 2 },
-        ////    { Tuple.Create(3, 2), 1 },
-        ////    { Tuple.Create(3, 5), 7 },
-        ////    { Tuple.Create(4, 5), 6 }
-        ////};
-
-        ////GP
-        ////Dictionary<Tuple<int, int>, int> arcs = new() {
-        ////    { Tuple.Create(1, 2), 7 },
-        ////    { Tuple.Create(1, 3), 3 },
-        ////    { Tuple.Create(2, 3), 2 },
-        ////    { Tuple.Create(2, 4), 4 },
-        ////    { Tuple.Create(3, 2), 2 },
-        ////    { Tuple.Create(3, 4), 5 }
-        ////};
-
-        //Dictionary<Tuple<int, int>, int> arcs = new() {
-        //    { Tuple.Create(1, 2), 2 },
-        //    { Tuple.Create(1, 3), 4 },
-        //    { Tuple.Create(2, 3), 3 },
-        //    { Tuple.Create(2, 4), 1 },
-        //    { Tuple.Create(3, 4), 5 }
-        //};
-
-        //Graph graph = new(nodes, arcs);
-
-        ////FordFulkerson fordFulkerson = new(graph);
-        ////fordFulkerson.Apply();
-
-        //GenericPreflow genericPreflow = new(graph);
-        //genericPreflow.Apply();
-
-        #region PROBLEM 1
+        #region ASSIGNMENT 1
         // 1 = S
         //{2, 3, 4 } = E
         //{5, 6, 7, 8, 9, 10, 11 } = P
@@ -134,7 +84,7 @@ public class Program
         graph1.WriteProjectTimes(11, 2, 4);
         #endregion
 
-        #region PROBLEM 2
+        #region ASSIGNMENT 2
         // 1 = S
         //{2, 3, 4, 5, 6} = A
         // 7 = T

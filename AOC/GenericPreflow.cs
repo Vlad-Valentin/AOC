@@ -6,7 +6,7 @@
     {
         public class GenericPreflow
         {
-            #region Properties
+            #region Properties & Constructors
             public Graph Graph { get; set; }
 
             private Dictionary<int, int> Distances { get; set; }
@@ -14,11 +14,9 @@
             private Dictionary<int, int> ExcessFlows { get; set; }
 
             private int Source { get; set; }
+
             private int Sink { get; set; }
 
-            #endregion
-
-            #region Constructors
             public GenericPreflow(Graph graph)
             {
                 Graph = graph;
@@ -33,6 +31,7 @@
                     ExcessFlows[node] = 0;
                 }
             }
+
             #endregion
 
             #region Functions
@@ -42,11 +41,11 @@
 
                 Distances = CalculateDistances();
 
-                while (SelectActiveNode() != -1)
+                while (GetActiveNode() != -1)
                 {
-                    int activeNode = SelectActiveNode();
+                    int activeNode = GetActiveNode();
 
-                    var arc = SelectValidArc(activeNode);
+                    var arc = GetValidArc(activeNode);
                     if (arc.Key != Tuple.Create(-1, -1) && arc.Value != 0)
                     {
                         int minUnit = Math.Min(ExcessFlows[activeNode], arc.Value);
@@ -134,7 +133,7 @@
                 return distances;
             }
 
-            private int SelectActiveNode()
+            private int GetActiveNode()
             {
                 foreach (var node in Graph.Nodes)
                 {
@@ -147,7 +146,7 @@
                 return -1;
             }
 
-            private KeyValuePair<Tuple<int, int>, int> SelectValidArc(int x)
+            private KeyValuePair<Tuple<int, int>, int> GetValidArc(int x)
             {
                 foreach (var arc in Graph.Arcs.Where(a => a.Key.Item1 == x))
                 {

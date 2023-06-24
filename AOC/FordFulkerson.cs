@@ -24,12 +24,59 @@
         #endregion
 
         #region Functions
-        public void Write()
+        public void Apply()
         {
-            Console.Write("\n\nP: ");
-            Predecessors.ForEach(p => { Console.Write($"{p} "); });
+            do
+            {
+                Predecessors = new(Enumerable.Repeat(0, Graph.Nodes.Count));
 
-            Graph.Write();
+                Predecessors[0] = Predecessors.Count;
+                CurrentNodes.Add(Graph.Nodes.First());
+
+                while (CurrentNodes.Count > 0 && Predecessors.Last() == 0)
+                {
+                    Console.Write("\n\nV: ");
+                    CurrentNodes.ForEach(c => { Console.Write($"{c} "); });
+
+                    int node = CurrentNodes.First();
+                    CurrentNodes.Remove(node);
+
+                    foreach (KeyValuePair<Tuple<int, int>, int> arc in Graph.Arcs)
+                    {
+                        if (Predecessors[arc.Key.Item2 - 1] == 0)
+                        {
+                            Predecessors[arc.Key.Item2 - 1] = arc.Key.Item1;
+                            CurrentNodes.Remove(arc.Key.Item2);
+                        }
+                    }
+                }
+
+                if (Predecessors.Last() != 0)
+                {
+                    List<int>? dmf = GetAugmentingPath(Graph.Nodes.First(), Graph.Nodes.Last());
+
+                    if (dmf == null)
+                    {
+                        Write();
+                        Console.WriteLine($"\n\nMax Flow: {MaxFlow}");
+                        return;
+                    }
+
+                    Console.Write("\n\nDMF: ");
+                    dmf.ForEach(d => { Console.Write($"{d} "); });
+
+                    int min = GetMinCapacity(dmf);
+                    Console.Write($"\n\nMin Capacity: {min}");
+
+                    MaxFlow += min;
+
+                    AugmentPath(dmf, min);
+                }
+
+                Write();
+                Console.WriteLine($"\n\nMax Flow: {MaxFlow}");
+            }
+            while (Predecessors.Last() != 0);
         }
 
         public List<int>? GetAugmentingPath(int s, int t)
@@ -102,59 +149,12 @@
             return minCapacity;
         }
 
-        public void Apply()
+        public void Write()
         {
-            do
-            {
-                Predecessors = new(Enumerable.Repeat(0, Graph.Nodes.Count));
+            Console.Write("\n\nP: ");
+            Predecessors.ForEach(p => { Console.Write($"{p} "); });
 
-                Predecessors[0] = Predecessors.Count;
-                CurrentNodes.Add(Graph.Nodes.First());
-
-                while (CurrentNodes.Count > 0 && Predecessors.Last() == 0)
-                {
-                    Console.Write("\n\nV: ");
-                    CurrentNodes.ForEach(c => { Console.Write($"{c} "); });
-
-                    int node = CurrentNodes.First();
-                    CurrentNodes.Remove(node);
-
-                    foreach (KeyValuePair<Tuple<int, int>, int> arc in Graph.Arcs)
-                    {
-                        if (Predecessors[arc.Key.Item2 - 1] == 0)
-                        {
-                            Predecessors[arc.Key.Item2 - 1] = arc.Key.Item1;
-                            CurrentNodes.Remove(arc.Key.Item2);
-                        }
-                    }
-                }
-
-                if (Predecessors.Last() != 0)
-                {
-                    List<int>? dmf = GetAugmentingPath(Graph.Nodes.First(), Graph.Nodes.Last());
-
-                    if (dmf == null)
-                    {
-                        Write();
-                        Console.WriteLine($"\n\nMax Flow: {MaxFlow}");
-                        return;
-                    }
-
-                    Console.Write("\n\nDMF: ");
-                    dmf.ForEach(d => { Console.Write($"{d} "); });
-
-                    int min = GetMinCapacity(dmf);
-                    Console.Write($"\n\nMin Capacity: {min}");
-
-                    MaxFlow += min;
-
-                    AugmentPath(dmf, min);
-                }
-
-                Write();
-                Console.WriteLine($"\n\nMax Flow: {MaxFlow}");
-            }
-            while (Predecessors.Last() != 0);
+            Graph.Write();
         }
         #endregion
     }
