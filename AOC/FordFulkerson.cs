@@ -35,8 +35,8 @@
 
                 while (CurrentNodes.Count > 0 && Predecessors.Last() == 0)
                 {
-                    Console.Write("\n\nV: ");
-                    CurrentNodes.ForEach(c => { Console.Write($"{c} "); });
+                    //Console.Write("\n\nV: ");
+                    //CurrentNodes.ForEach(c => { Console.Write($"{c} "); });
 
                     int node = CurrentNodes.First();
                     CurrentNodes.Remove(node);
@@ -57,7 +57,7 @@
 
                     if (dmf == null)
                     {
-                        Write();
+                        //Write();
                         Console.WriteLine($"\n\nMax Flow: {MaxFlow}");
                         return;
                     }
@@ -73,7 +73,7 @@
                     AugmentPath(dmf, min);
                 }
 
-                Write();
+                //Write();
                 Console.WriteLine($"\n\nMax Flow: {MaxFlow}");
             }
             while (Predecessors.Last() != 0);

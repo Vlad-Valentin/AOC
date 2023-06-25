@@ -5,11 +5,12 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        #region ASSIGNMENT 1
         //  1 = S
-        // {2, 3, 4 } = E
-        // {5, 6, 7, 8, 9 } = P
+        // {2, 3, 4 } = E (Team Nodes)
+        // {5, 6, 7, 8, 9 } = P (Project Nodes)
         //  10 = T
+        // sum(c(S, E)) = sum(c(P, T))
+        #region ASSIGNMENT 1    
         List<int> nodes1 = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         Dictionary<Tuple<int, int>, int> arcs1 = new()
          {
@@ -40,11 +41,12 @@ public class Program
 
         Graph graph1 = new(nodes1, arcs1);
 
-        Console.WriteLine("\t\t\t\t\t== ASSIGNMENT 1 ==\n\n");
+        Console.WriteLine("\t\t\t\t\t== ASSIGNMENT 1 ==");
 
-        Console.WriteLine("\n\t== 1. Ford-Fulkerson ==");
+        Console.WriteLine("\n\n\t== 1. Ford-Fulkerson ==");
         FordFulkerson fordFulkerson1 = new(graph1);
         fordFulkerson1.Apply();
+        fordFulkerson1.Write();
 
         graph1.WriteTeamTimes(3, 5, 9);
         graph1.WriteProjectTimes(9, 2, 4);
@@ -77,83 +79,87 @@ public class Program
          };
         graph1 = new(nodes1, arcs1);
 
-        Console.WriteLine("\n\t== 1. Generic Preflow ==");
+        Console.WriteLine("\n\n\t== 1. Generic Preflow ==");
         GenericPreflow genericPreflow1 = new(graph1);
         genericPreflow1.Apply();
+        genericPreflow1.Write();
 
         graph1.WriteTeamTimes(3, 5, 9);
         graph1.WriteProjectTimes(9, 2, 4);
         #endregion
 
-        //#region ASSIGNMENT 2
-        //// 1 = S
-        ////{2, 3 } = Supplier Nodes
-        ////{4, 5 } = Transit Nodes
-        ////{6, 7 } = Warehouse Nodes
-        //// 8 = T
-        //List<int> nodes2 = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
-        //Dictionary<Tuple<int, int>, int> arcs2 = new()
-        //{
-        //{Tuple.Create(1, 2), 3},
-        //{Tuple.Create(1, 3), 4},
+        // 1 = S
+        //{2, 3 } = A (Supplier Nodes)
+        //{4, 5 } = A' (Transit Nodes)
+        //{6, 7 } = W (Warehouse Nodes) 
+        // 8 = T
+        // e(A) < 0; e(A') = 0, e(W) > 0
+        #region ASSIGNMENT 2
+        List<int> nodes2 = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
+        Dictionary<Tuple<int, int>, int> arcs2 = new()
+        {
+        {Tuple.Create(1, 2), 3},
+        {Tuple.Create(1, 3), 4},
 
-        //{Tuple.Create(2, 3), 5},
-        //{Tuple.Create(2, 4), 2},
-        //{Tuple.Create(2, 7), 1},
+        {Tuple.Create(2, 3), 5},
+        {Tuple.Create(2, 4), 2},
+        {Tuple.Create(2, 7), 1},
 
-        //{Tuple.Create(3, 5), 3},
-        //{Tuple.Create(3, 7), 5},
+        {Tuple.Create(3, 5), 3},
+        {Tuple.Create(3, 7), 5},
 
-        //{Tuple.Create(4, 6), 2},
-        //{Tuple.Create(5, 6), 3},
+        {Tuple.Create(4, 6), 2},
+        {Tuple.Create(5, 6), 3},
 
-        //{Tuple.Create(6, 7), 1},
-        //{Tuple.Create(6, 8), 2},
+        {Tuple.Create(6, 7), 1},
+        {Tuple.Create(6, 8), 2},
 
-        //{Tuple.Create(7, 8), 3}
-        //};
+        {Tuple.Create(7, 8), 3}
+        };
 
-        //Graph graph2 = new(nodes2, arcs2);
+        Graph graph2 = new(nodes2, arcs2);
 
-        //List<int> transitNodes = new() { 4, 5 };
+        List<int> transitNodes = new() { 4, 5 };
 
-        //Console.WriteLine("\n\n\t\t\t\t\t== ASSIGNMENT 2 ==\n\n");
+        Console.WriteLine("\n\n\t\t\t\t\t== ASSIGNMENT 2 ==");
 
-        //Console.WriteLine("\n\t== 2. Ford-Fulkerson ==");
-        //FordFulkerson fordFulkerson2 = new(graph2);
-        //fordFulkerson2.Apply();
+        Console.WriteLine("\n\n\t== 2. Ford-Fulkerson ==");
+        FordFulkerson fordFulkerson2 = new(graph2);
+        fordFulkerson2.Apply();
+        fordFulkerson2.Write();
 
-        //graph2.WriteSupplierSent(2, 6, 7, transitNodes);
-        //graph2.WriteWarehouseReceived(6, 2, 3, transitNodes);
+        graph2.WriteSupplierSent(2, 6, 7, transitNodes);
+        graph2.WriteWarehouseReceived(6, 2, 3, transitNodes);
 
-        //arcs2 = new()
-        //{
-        //{Tuple.Create(1, 2), 3},
-        //{Tuple.Create(1, 3), 4},
+        arcs2 = new()
+        {
+        {Tuple.Create(1, 2), 3},
+        {Tuple.Create(1, 3), 4},
 
-        //{Tuple.Create(2, 3), 5},
-        //{Tuple.Create(2, 4), 2},
-        //{Tuple.Create(2, 7), 1},
+        {Tuple.Create(2, 3), 5},
+        {Tuple.Create(2, 4), 2},
+        {Tuple.Create(2, 7), 1},
 
-        //{Tuple.Create(3, 5), 3},
-        //{Tuple.Create(3, 7), 5},
+        {Tuple.Create(3, 5), 3},
+        {Tuple.Create(3, 7), 5},
 
-        //{Tuple.Create(4, 6), 2},
-        //{Tuple.Create(5, 6), 3},
+        {Tuple.Create(4, 6), 2},
+        {Tuple.Create(5, 6), 3},
 
-        //{Tuple.Create(6, 7), 1},
-        //{Tuple.Create(6, 8), 2},
+        {Tuple.Create(6, 7), 1},
+        {Tuple.Create(6, 8), 2},
 
-        //{Tuple.Create(7, 8), 3}
-        //};
-        //graph2 = new(nodes2, arcs2);
+        {Tuple.Create(7, 8), 3}
+        };
+        graph2 = new(nodes2, arcs2);
 
-        //Console.WriteLine("\n\t== 2. Generic Preflow ==");
-        //GenericPreflow genericPreflow2 = new(graph2);
-        //genericPreflow2.Apply();
+        Console.WriteLine("\n\n\t== 2. Generic Preflow ==");
+        GenericPreflow genericPreflow2 = new(graph2);
+        genericPreflow2.Apply();
+        genericPreflow2.Write();
 
-        //graph2.WriteSupplierSent(2, 6, 7, transitNodes);
-        //graph2.WriteWarehouseReceived(6, 2, 3, transitNodes);
-        //#endregion
+        graph2.WriteSupplierSent(2, 6, 7, transitNodes);
+        graph2.WriteWarehouseReceived(6, 2, 3, transitNodes);
+        #endregion
     }
 }

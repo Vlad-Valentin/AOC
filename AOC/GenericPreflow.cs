@@ -72,10 +72,10 @@
                         Distances[activeNode] = minDistance;
                     }
 
-                    Write();
+                    //Write();
                 }
 
-                Write();
+                //Write();
             }
 
             private void InitExcessFlows()
