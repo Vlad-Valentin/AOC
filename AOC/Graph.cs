@@ -53,11 +53,14 @@
             Console.Write($"\n\nSupplier {s - 1} ({s}): ");
             for (int w = wStart; w <= wEnd; w++)
             {
+                bool found = false;
+
                 if (GetCapacity(w, s) != 0)
                 {
                     Console.Write($"{GetCapacity(w, s)} ");
+                    found = true;
                 }
-                else if (t != null)
+                else
                 {
                     foreach (var transit in t)
                     {
@@ -68,14 +71,21 @@
                             if (GetCapacity(w, transit) != 0 && a.Value != 0)
                             {
                                 Console.Write($"{GetCapacity(w, transit)} ");
+                                found = true;
                                 continue;
                             }
                             else
                             {
                                 Console.Write($"{0} ");
+                                found = true;
                             }
                         }
                     }
+                }
+
+                if (!found)
+                {
+                    Console.Write($"{0} ");
                 }
             }
         }
@@ -85,11 +95,14 @@
             Console.Write($"\n\nWarehouse {w - (sEnd + t.Count)} ({w}): ");
             for (int s = sStart; s <= sEnd; s++)
             {
+                bool found = false;
+
                 if (GetCapacity(w, s) != 0)
                 {
                     Console.Write($"{GetCapacity(w, s)} ");
+                    found = true;
                 }
-                else if (t != null)
+                else
                 {
                     foreach (var transit in t)
                     {
@@ -100,14 +113,21 @@
                             if (GetCapacity(w, transit) != 0 && a.Value != 0)
                             {
                                 Console.Write($"{GetCapacity(w, transit)} ");
+                                found = true;
                                 continue;
                             }
                             else
                             {
                                 Console.Write($"{0} ");
+                                found = true;
                             }
                         }
                     }
+                }
+
+                if (!found)
+                {
+                    Console.Write($"{0} ");
                 }
             }
         }
