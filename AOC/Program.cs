@@ -86,24 +86,30 @@ public class Program
 
         #region ASSIGNMENT 2
         // 1 = S
-        //{2, 3, 4, 5, 6} = A
-        // 7 = T
-        List<int> nodes2 = new() { 1, 2, 3, 4, 5, 6, 7 };
+        //{2, 3 } = Supplier Nodes
+        //{4, 5 } = Transit Nodes
+        //{6, 7 } = Warehouse Nodes
+        // 8 = T
+        List<int> nodes2 = new() { 1, 2, 3, 4, 5, 6, 7, 8 };
         Dictionary<Tuple<int, int>, int> arcs2 = new()
         {
-        {Tuple.Create(1, 2), 4},
-        {Tuple.Create(1, 3), 2},
-        {Tuple.Create(2, 3), 2},
+        {Tuple.Create(1, 2), 3},
+        {Tuple.Create(1, 3), 4},
+        {Tuple.Create(2, 3), 5},
         {Tuple.Create(2, 4), 2},
-        {Tuple.Create(2, 5), 3},
-        {Tuple.Create(3, 6), 5},
+        {Tuple.Create(2, 7), 1},
+        {Tuple.Create(3, 5), 3},
+        {Tuple.Create(3, 7), 5},
         {Tuple.Create(4, 6), 2},
-        {Tuple.Create(5, 7), 3},
-        {Tuple.Create(6, 5), 1},
-        {Tuple.Create(6, 7), 3}
+        {Tuple.Create(5, 6), 3},
+        {Tuple.Create(6, 7), 1},
+        {Tuple.Create(6, 8), 2},
+        {Tuple.Create(7, 8), 3}
         };
 
         Graph graph2 = new(nodes2, arcs2);
+
+        List<int> transitNodes = new() { 4, 5 };
 
         Console.WriteLine("\n\n\t\t\t\t\t== ASSIGNMENT 2 ==\n\n");
 
@@ -113,16 +119,18 @@ public class Program
 
         arcs2 = new()
         {
-        {Tuple.Create(1, 2), 4},
-        {Tuple.Create(1, 3), 2},
-        {Tuple.Create(2, 3), 2},
+        {Tuple.Create(1, 2), 3},
+        {Tuple.Create(1, 3), 4},
+        {Tuple.Create(2, 3), 5},
         {Tuple.Create(2, 4), 2},
-        {Tuple.Create(2, 5), 3},
-        {Tuple.Create(3, 6), 5},
+        {Tuple.Create(2, 7), 1},
+        {Tuple.Create(3, 5), 3},
+        {Tuple.Create(3, 7), 5},
         {Tuple.Create(4, 6), 2},
-        {Tuple.Create(5, 7), 3},
-        {Tuple.Create(6, 5), 1},
-        {Tuple.Create(6, 7), 3}
+        {Tuple.Create(5, 6), 3},
+        {Tuple.Create(6, 7), 1},
+        {Tuple.Create(6, 8), 2},
+        {Tuple.Create(7, 8), 3}
         };
         graph2 = new(nodes2, arcs2);
 
@@ -130,8 +138,8 @@ public class Program
         GenericPreflow genericPreflow2 = new(graph2);
         genericPreflow2.Apply();
 
-        graph2.WriteSupplierSent(3, 4);
-        graph2.WriteWarehouseReceived(5, 4);
+        graph2.WriteSupplierSent(2, 6, 7, transitNodes);
+        graph2.WriteWarehouseReceived(6, 2, 3, transitNodes);
         #endregion
     }
 }

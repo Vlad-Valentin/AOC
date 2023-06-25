@@ -48,35 +48,66 @@
             }
         }
 
-        public void WriteSupplierSent(int s, int t)
+        public void WriteSupplierSent(int s, int wStart, int wEnd, List<int> t)
         {
-            Console.Write($"\n\nWarehouse {s - 1} ({s}): ");
-            for (int d = 5; d <= 6; d++)
-            {
-                if (GetCapacity(d, s) != 0)
-                {
-                    Console.Write($"{GetCapacity(d, s)} ");
-                }
-                else
-                {
-                    Console.Write($"{GetCapacity(d, t)} ");
-                }
-
-            }
-        }
-
-        public void WriteWarehouseReceived(int w, int t)
-        {
-            Console.Write($"\n\nDeposit {w - 4} ({w}): ");
-            for (int s = 2; s <= 3; s++)
+            Console.Write($"\n\nSupplier {s - 1} ({s}): ");
+            for (int w = wStart; w <= wEnd; w++)
             {
                 if (GetCapacity(w, s) != 0)
                 {
                     Console.Write($"{GetCapacity(w, s)} ");
                 }
-                else
+                else if (t != null)
                 {
-                    Console.Write($"{GetCapacity(w, t)} ");
+                    foreach (var transit in t)
+                    {
+                        var arcs = Arcs.Where(a => a.Key.Item1 == transit && a.Key.Item2 == s);
+
+                        foreach (var a in arcs)
+                        {
+                            if (GetCapacity(w, transit) != 0 && a.Value != 0)
+                            {
+                                Console.Write($"{GetCapacity(w, transit)} ");
+                                continue;
+                            }
+                            else
+                            {
+                                Console.Write($"{0} ");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void WriteWarehouseReceived(int w, int sStart, int sEnd, List<int> t)
+        {
+            Console.Write($"\n\nWarehouse {w - (sEnd + t.Count)} ({w}): ");
+            for (int s = sStart; s <= sEnd; s++)
+            {
+                if (GetCapacity(w, s) != 0)
+                {
+                    Console.Write($"{GetCapacity(w, s)} ");
+                }
+                else if (t != null)
+                {
+                    foreach (var transit in t)
+                    {
+                        var arcs = Arcs.Where(a => a.Key.Item1 == transit && a.Key.Item2 == s);
+
+                        foreach (var a in arcs)
+                        {
+                            if (GetCapacity(w, transit) != 0 && a.Value != 0)
+                            {
+                                Console.Write($"{GetCapacity(w, transit)} ");
+                                continue;
+                            }
+                            else
+                            {
+                                Console.Write($"{0} ");
+                            }
+                        }
+                    }
                 }
             }
         }
